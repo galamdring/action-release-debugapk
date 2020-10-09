@@ -16,14 +16,17 @@ To use the action simply add the following lines to your `.github/workflows/andr
 name: Build & Publish Debug APK
 
 on:
- push:
-  branches:
-   - master
+ create:
+  tags:
+   - '*'
    
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Get tag name
+      id: get_tag_name
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - uses: actions/checkout@v1
     - name: set up JDK 1.8
       uses: actions/setup-java@v1
@@ -36,11 +39,12 @@ jobs:
     - name: Build Debug APK
       run: ./gradlew assembleDebug
     - name: Releasing using Hub
-      uses: ShaunLWM/action-release-debugapk@master
+      uses: galamdring/action-release-debugapk@master
       env:
        GITHUB_TOKEN: ${{ secrets.TOKEN }}
        APP_FOLDER: app
        RELEASE_TITLE: New Build
+       VERSION_NAME: ${{ steps.get_tag_name.outputs.VERSION }}
 ```
 
 ### Secrets
