@@ -1,4 +1,8 @@
 #!/bin/bash
 
 hub checkout master
-hub release create -a ./${APP_FOLDER}/build/outputs/apk/free/debug/*-debug.apk -a ./${APP_FOLDER}/build/outputs/apk/paid/debug/*-debug.apk -m "${RELEASE_TITLE} - ${VERSION_NAME}" ${VERSION_NAME} 
+hub release create -m "${RELEASE_TITLE} - ${VERSION_NAME}" ${VERSION_NAME} 
+if [ "${INCLUDE_DEBUG_FREE+n}" == "Y" ]; then hub release edit -a ./${APP_FOLDER}/build/outputs/apk/free/debug/*-debug.apk ${VERSION_NAME}; fi
+if [ "${INCLUDE_DEBUG_PAID+n}" == "Y" ]; then hub release edit -a ./${APP_FOLDER}/build/outputs/apk/paid/debug/*-debug.apk ${VERSION_NAME}; fi
+if [ "${INCLUDE_RELEASE_FREE+n}" == "Y" ]; then hub release edit -a ./${APP_FOLDER}/build/outputs/apk/free/release/*.apk ${VERSION_NAME}; fi
+if [ "${INCLUDE_RELEASE_PAID+n}" == "Y" ]; then hub release edit -a ./${APP_FOLDER}/build/outputs/apk/paid/release/*.apk ${VERSION_NAME}; fi
