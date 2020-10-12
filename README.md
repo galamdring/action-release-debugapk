@@ -45,6 +45,10 @@ jobs:
        APP_FOLDER: app
        RELEASE_TITLE: New Build
        VERSION_NAME: ${{ steps.get_tag_name.outputs.VERSION }}
+       INCLUDE_DEBUG_FREE: Y
+       INCLUDE_DEBUG_PAID: Y
+       INCLUDE_RELEASE_FREE: Y
+       INCLUDE_RELEASE_PAID: Y
 ```
 
 ### Secrets
